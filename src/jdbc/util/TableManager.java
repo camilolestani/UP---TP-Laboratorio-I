@@ -11,7 +11,7 @@ public class TableManager {
         Connection c = null;
         try {
             c = DBManager.connect();
-            String sql = "CREATE TABLE IF NOT EXISTS usuarios (dni INTEGER IDENTITY, nombre_completo VARCHAR(256), email VARCHAR(256), password VARCHAR(256))";
+            String sql = "CREATE TABLE IF NOT EXISTS usuarios (dni INTEGER IDENTITY, nombre_completo VARCHAR(256), tipo_usuario VARCHAR(256), email VARCHAR(256), password VARCHAR(256))";
 
             Statement s = c.createStatement();
             s.execute(sql);

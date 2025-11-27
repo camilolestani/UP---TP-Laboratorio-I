@@ -2,6 +2,7 @@ package jdbc.dao.impl;
 
 import jdbc.dao.UsuarioDAO;
 import jdbc.entidades.Usuario;
+import jdbc.enums.TipoUsuario;
 import jdbc.exceptions.dao.*;
 import jdbc.exceptions.sql.ConnectionException;
 import jdbc.exceptions.sql.ConstraintViolationException;
@@ -19,10 +20,11 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
         String nombreCompleto = usuario.getNombreCompleto();
         String email = usuario.getEmail();
         String password = usuario.getPassword();
-        String sql = "INSERT INTO usuarios (dni, nombre_completo, email, password) VALUES (?,?,?,?)";
+        String tipo = usuario.getTipo().toString();
+        String sql = "INSERT INTO usuarios (dni, nombre_completo, email, password, tipo_usuario) VALUES (?,?,?,?,?)";
 //        String sql = "INSERT INTO usuarios (dni, nombre_completo, email, password) VALUES ('" + dni + "', '" + nombreCompleto + "', '" + email + "', '" + password + "' )";
         try {
-            QueryRunner.runUpdate(sql, dni, nombreCompleto, email, password);
+            QueryRunner.runUpdate(sql, dni, nombreCompleto, email, password, tipo);
         } catch (DuplicateKeyException e) {
             throw new ObjetoDuplicadoException(e);
         } catch (ForeignKeyViolationException e) {
@@ -42,10 +44,11 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
         String nombreCompleto = usuario.getNombreCompleto();
         String email = usuario.getEmail();
         String password = usuario.getPassword();
-        String sql = "UPDATE usuarios SET nombre_completo = ?, email = ?, password = ? WHERE dni=?";
+        String tipo = usuario.getTipo().toString();
+        String sql = "UPDATE usuarios SET nombre_completo = ?, email = ?, password = ?, tipo_usuario = ? WHERE dni=?";
 //        String sql = "UPDATE usuarios SET nombre_completo = '" + nombreCompleto + "', email = '" + email + "', password = '" + password + "' WHERE dni='" + dni.toString()+ "'";
         try {
-            QueryRunner.runUpdate(sql, nombreCompleto, email, password, dni);
+            QueryRunner.runUpdate(sql, nombreCompleto, email, password, tipo, dni);
         } catch (ForeignKeyViolationException e) {
             throw new ReferenciaErroneaException(e);
         } catch (ConstraintViolationException e) {
@@ -85,7 +88,9 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
                 String nombreCompleto = rs.getString("nombre_completo");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                return new Usuario(dni, nombreCompleto, email, password);
+                TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo_usuario"));
+
+                return new Usuario(dni, nombreCompleto, email, password, tipo);
             }, d);
             Usuario u = usuarios.getFirst();
             if(u != null) {
@@ -114,7 +119,8 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
                 String nombreCompleto = rs.getString("nombre_completo");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
-                return new Usuario(dni, nombreCompleto, email, password);
+                TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo_usuario"));
+                return new Usuario(dni, nombreCompleto, email, password, tipo);
             });
         } catch (ForeignKeyViolationException e) {
             throw new ReferenciaErroneaException(e);

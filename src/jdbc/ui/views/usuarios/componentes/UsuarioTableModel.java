@@ -1,7 +1,6 @@
 package jdbc.ui.views.usuarios.componentes;
 
 import jdbc.entidades.Usuario;
-import jdbc.ui.PanelManager;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
@@ -14,10 +13,11 @@ public class UsuarioTableModel extends AbstractTableModel {
 	private static final int COLUMNA_DNI = 1;
 	private static final int COLUMNA_EMAIL = 2;
 	private static final int COLUMNA_PASSWORD = 3;
-	private static final int COLUMNA_ACTIONS = 4;
+	private static final int COLUMNA_TIPO = 4;
+	private static final int COLUMNA_ACTIONS = 5;
 
-	private String[] nombresColumnas = {"Nombre", "DNI", "Email", "Password", "Acciones"};
-	private Class[] tiposColumnas = {String.class, Integer.class, String.class, String.class, Usuario.class};
+	private String[] nombresColumnas = {"Nombre", "DNI", "Email", "Password", "Tipo de Usuario", "Acciones"};
+	private Class[] tiposColumnas = {String.class, Integer.class, String.class, String.class, String.class, Usuario.class};
 
 	private List<Usuario> contenido;
 
@@ -54,16 +54,18 @@ public class UsuarioTableModel extends AbstractTableModel {
 		case COLUMNA_DNI:
 			result = u.getDni();
 			break;
+        case COLUMNA_TIPO:
+			result = u.getTipo().toString();
+			break;
         case COLUMNA_ACTIONS:
 			result = u;
 			break;
 		default:
-			result = new String("");
+			result = "";
 		}
-		
+
 		return result;
 	}
-
 
 	public String getColumnName(int col) {
         return nombresColumnas[col];

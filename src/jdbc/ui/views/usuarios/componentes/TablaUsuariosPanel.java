@@ -40,10 +40,10 @@ public class TablaUsuariosPanel extends JPanel implements ActionListener, Printa
         JPanel auxTabla = new JPanel();
         modelo = new UsuarioTableModel();
         tablaUsuarios = new JTable(modelo);
-        tablaUsuarios.getColumnModel().getColumn(4).setCellRenderer(new UserActionsRenderer());
-        tablaUsuarios.getColumnModel().getColumn(4).setCellEditor(new UserActionsEditor(panelManager, tablaUsuarios));
-        tablaUsuarios.getColumnModel().getColumn(4).setPreferredWidth(180); // Wider actions column
-        tablaUsuarios.getColumnModel().getColumn(4).setMinWidth(180);
+        tablaUsuarios.getColumnModel().getColumn(5).setCellRenderer(new UserActionsRenderer());
+        tablaUsuarios.getColumnModel().getColumn(5).setCellEditor(new UserActionsEditor(panelManager, tablaUsuarios));
+        tablaUsuarios.getColumnModel().getColumn(5).setPreferredWidth(180); // Wider actions column
+        tablaUsuarios.getColumnModel().getColumn(5).setMinWidth(180);
         tablaUsuarios.setRowHeight(35);
         scrollPaneParaTabla = new JScrollPane(tablaUsuarios);
         auxTabla.add(scrollPaneParaTabla);

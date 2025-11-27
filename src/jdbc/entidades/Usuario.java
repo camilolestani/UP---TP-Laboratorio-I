@@ -1,18 +1,22 @@
 package jdbc.entidades;
 
+import jdbc.enums.TipoUsuario;
+
 public class Usuario {
     private Integer dni;
     private String nombreCompleto;
     private String email;
     private String password;
+    private TipoUsuario tipo;
 
     public Usuario(){}
 
-    public Usuario(Integer dni, String nombreCompleto, String email, String password){
+    public Usuario(Integer dni, String nombreCompleto, String email, String password, TipoUsuario tipo){
         this.dni = dni;
         this.nombreCompleto = nombreCompleto;
         this.email = email;
         this.password = password;
+        this.tipo = tipo;
     }
 
     public String getPassword() {
@@ -55,5 +59,13 @@ public class Usuario {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    public TipoUsuario getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(TipoUsuario tipo) {
+        this.tipo = tipo;
     }
 }

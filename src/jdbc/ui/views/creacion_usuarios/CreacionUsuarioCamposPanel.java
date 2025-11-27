@@ -1,6 +1,7 @@
 package jdbc.ui.views.creacion_usuarios;
 
 import jdbc.entidades.Usuario;
+import jdbc.enums.TipoUsuario;
 import jdbc.ui.PanelManager;
 import jdbc.ui.componentes.CamposPanel;
 
@@ -8,16 +9,17 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CreacionUsuarioCamposPanel extends CamposPanel<Usuario> {
-    private JTextField dniTxt;
-    private JTextField nombreTxt;
-    private JTextField emailTxt;
-    private JTextField passwordTxt;
+    protected JTextField dniTxt;
+    protected JTextField nombreTxt;
+    protected JTextField emailTxt;
+    protected JTextField passwordTxt;
+    protected JCheckBox adminUserCheckbox;
 
     public CreacionUsuarioCamposPanel(PanelManager m){
         super(m);
     }
     public void renderizar(){
-        this.setLayout(new GridLayout(4, 2));
+        this.setLayout(new GridLayout(5, 2));
 
         JLabel dniLabel = new JLabel("DNI (sin puntos): ");
         JTextField dniInput = new JTextField(15);
@@ -42,6 +44,12 @@ public class CreacionUsuarioCamposPanel extends CamposPanel<Usuario> {
         this.passwordTxt = passwordInput;
         this.add(passwordLabel);
         this.add(passwordInput);
+
+        JLabel adminUsuarioLabel = new JLabel("Admin: ");
+        JCheckBox adminUserCheckbox = new JCheckBox();
+        this.adminUserCheckbox = adminUserCheckbox;
+        this.add(adminUsuarioLabel);
+        this.add(adminUserCheckbox);
     }
 
     public Usuario obtenerValor(){
@@ -49,7 +57,8 @@ public class CreacionUsuarioCamposPanel extends CamposPanel<Usuario> {
         String nombre = this.nombreTxt.getText();
         String email = this.emailTxt.getText();
         String password = this.passwordTxt.getText();
-        return new Usuario(dni, nombre, email, password);
+        Boolean isAdmin = this.adminUserCheckbox.isSelected();
+        return new Usuario(dni, nombre, email, password, isAdmin ? TipoUsuario.ADMINISTRADOR : TipoUsuario.CLIENTE);
     }
 
     @Override
@@ -58,5 +67,6 @@ public class CreacionUsuarioCamposPanel extends CamposPanel<Usuario> {
         this.nombreTxt.setText("");
         this.emailTxt.setText("");
         this.passwordTxt.setText("");
+        this.adminUserCheckbox.setSelected(false);
     }
 }
