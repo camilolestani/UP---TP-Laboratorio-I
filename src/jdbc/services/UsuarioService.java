@@ -92,6 +92,23 @@ public class UsuarioService {
         }
     }
 
+    public Usuario loginUsuario(Integer dni, String pass) throws ServiceException {
+        try {
+            return dao.loginUsuario(dni, pass);
+        } catch (NoMatchesException e) {
+            throw new ServiceException("El dni o la contraseña no coinciden.");
+        }
+        catch (ViolacionRestriccionException e) {
+            throw new ServiceException("Hubo un error inesperado al tratar de obtener el usuario: el parametro de busqueda no cumple con las restricciones del campo.");
+        }
+        catch (SinConexionException e) {
+            throw new ServiceException("Hubo un error al conectarse con la base de datos.");
+        }
+        catch (DAOException e) {
+            throw new ServiceException("Hubo un error inesperado al tratar de obtener el usuario.");
+        }
+    }
+
     public List<Usuario> obtenerTodosLosUsuarios() throws ServiceException {
         try {
             return dao.listaTodosLosUsuarios();

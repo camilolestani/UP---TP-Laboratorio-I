@@ -80,7 +80,6 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
 
     @Override
     public Usuario muestraUsuario(Integer d) throws DAOException {
-//        String sql = "SELECT * FROM usuarios WHERE dni = '" + d + "' ";
         String sql = "SELECT * FROM usuarios WHERE dni = ?";
         try {
             List<Usuario> usuarios = QueryRunner.runSelection(sql, (rs) -> {
@@ -93,6 +92,40 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
                 return new Usuario(dni, nombreCompleto, email, password, tipo);
             }, d);
             Usuario u = usuarios.getFirst();
+            if(u != null) {
+                return u;
+            } else {
+                throw new NoMatchesException("No se encontró el usuario buscado.");
+            }
+        } catch (ForeignKeyViolationException e) {
+            throw new ReferenciaErroneaException(e);
+        } catch (ConstraintViolationException e) {
+            throw new ViolacionRestriccionException(e);
+        } catch (ConnectionException e) {
+            throw new SinConexionException(e);
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        }
+    }
+
+    @Override
+    public Usuario loginUsuario(Integer d, String p) throws DAOException {
+        String sql = "SELECT * FROM usuarios WHERE dni = ? and password = ?";
+        try {
+            List<Usuario> usuarios = QueryRunner.runSelection(sql, (rs) -> {
+                int dni = rs.getInt("dni");
+                String nombreCompleto = rs.getString("nombre_completo");
+                String email = rs.getString("email");
+                String password = rs.getString("password");
+                TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo_usuario"));
+
+                return new Usuario(dni, nombreCompleto, email, password, tipo);
+            }, d, p);
+            if(usuarios.isEmpty()) {
+                throw new NoMatchesException("No se encontró el usuario buscado.");
+            }
+            Usuario u = usuarios.getFirst();
+
             if(u != null) {
                 return u;
             } else {

@@ -22,7 +22,8 @@ public class Principal {
         manager = new PanelManager();
         manager.armarManager();
 
-        manager.mostrarVistaUsuarios();
+        manager.mostrarLogin();
+//        manager.mostrarVistaUsuarios();
     }
 
     public void showFrame() {
