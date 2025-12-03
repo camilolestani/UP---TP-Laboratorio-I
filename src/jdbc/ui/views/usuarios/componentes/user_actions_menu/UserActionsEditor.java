@@ -8,14 +8,16 @@ import jdbc.ui.views.usuarios.componentes.UsuarioTableModel;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class UserActionsEditor extends AbstractCellEditor implements TableCellEditor {
+public class UserActionsEditor extends AbstractCellEditor implements TableCellEditor, TableCellRenderer {
     PanelManager manager;
     private JPanel panel;
     private JButton editBtn;
+    private JButton verProductosBtn;
     private JButton deleteBtn;
     private Usuario usuario;
     private JTable table;
@@ -76,6 +78,18 @@ public class UserActionsEditor extends AbstractCellEditor implements TableCellEd
     @Override
     public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
         this.usuario = (Usuario) value;
+        return panel;
+    }
+
+    @Override
+    public Component getTableCellRendererComponent(JTable table, Object value,
+                                                   boolean isSelected, boolean hasFocus,
+                                                   int row, int column) {
+        if (isSelected) {
+            panel.setBackground(table.getSelectionBackground());
+        } else {
+            panel.setBackground(table.getBackground());
+        }
         return panel;
     }
 

@@ -5,7 +5,6 @@ import jdbc.entidades.Usuario;
 import jdbc.services.UsuarioService;
 import jdbc.ui.PanelManager;
 import jdbc.ui.views.usuarios.componentes.user_actions_menu.UserActionsEditor;
-import jdbc.ui.views.usuarios.componentes.user_actions_menu.UserActionsRenderer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +15,7 @@ import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.util.List;
 
-public class TablaUsuariosPanel extends JPanel implements ActionListener, Printable {
+public class TablaUsuariosPanel extends JPanel implements ActionListener {
 
     private PanelManager panelManager;
 
@@ -39,9 +38,10 @@ public class TablaUsuariosPanel extends JPanel implements ActionListener, Printa
 
         JPanel auxTabla = new JPanel();
         modelo = new UsuarioTableModel();
+        UserActionsEditor userActionCell = new UserActionsEditor(panelManager, tablaUsuarios);
         tablaUsuarios = new JTable(modelo);
-        tablaUsuarios.getColumnModel().getColumn(5).setCellRenderer(new UserActionsRenderer());
-        tablaUsuarios.getColumnModel().getColumn(5).setCellEditor(new UserActionsEditor(panelManager, tablaUsuarios));
+        tablaUsuarios.getColumnModel().getColumn(5).setCellRenderer(userActionCell);
+        tablaUsuarios.getColumnModel().getColumn(5).setCellEditor(userActionCell);
         tablaUsuarios.getColumnModel().getColumn(5).setPreferredWidth(180); // Wider actions column
         tablaUsuarios.getColumnModel().getColumn(5).setMinWidth(180);
         tablaUsuarios.setRowHeight(35);
@@ -71,12 +71,6 @@ public class TablaUsuariosPanel extends JPanel implements ActionListener, Printa
         } else if (e.getSource() == botonRecargar) {
             this.recargarContenido();
         }
-    }
-
-    @Override
-    public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
-        System.out.println("imprimo");
-        return 0;
     }
 
     public void recargarContenido() {

@@ -5,9 +5,9 @@ import jdbc.ui.views.usuarios.componentes.TablaUsuariosPanel;
 
 import javax.swing.*;
 
-public class VistaUsuarios extends JPanel {
+public class VistaUsuarioAdmin extends JPanel {
     private TablaUsuariosPanel tabla;
-    public VistaUsuarios(PanelManager panelManager) {
+    public VistaUsuarioAdmin(PanelManager panelManager) {
         this.tabla = new TablaUsuariosPanel(panelManager);
         renderizar();
     }

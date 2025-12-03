@@ -5,14 +5,14 @@ import jdbc.entidades.Usuario;
 import jdbc.ui.views.creacion_usuarios.PantallaCreacionUsuario;
 import jdbc.ui.views.edicion_usuarios.PantallaEdicionUsuario;
 import jdbc.ui.views.login.Login;
-import jdbc.ui.views.usuarios.VistaUsuarios;
+import jdbc.ui.views.usuarios.VistaUsuarioAdmin;
 
 import javax.swing.*;
 
 public class PanelManager {
 
 	private JFrame frame;
-	private VistaUsuarios vistaUsuarios;
+	private VistaUsuarioAdmin vistaUsuarioAdmin;
     private Login vistaLogin;
     private PantallaCreacionUsuario pantallaCreacionUsuario;
     private PantallaEdicionUsuario pantallaEdicionUsuario;
@@ -28,7 +28,7 @@ public class PanelManager {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         vistaLogin = new Login(this);
-        vistaUsuarios = new VistaUsuarios(this);
+        vistaUsuarioAdmin = new VistaUsuarioAdmin(this);
         pantallaCreacionUsuario = new PantallaCreacionUsuario(this);
         pantallaEdicionUsuario = new PantallaEdicionUsuario(this);
 	}
@@ -46,8 +46,8 @@ public class PanelManager {
 
 	public void mostrarVistaUsuarios() {
 		frame.getContentPane().removeAll();
-		frame.getContentPane().add(vistaUsuarios);
-        vistaUsuarios.recargarTabla();
+		frame.getContentPane().add(vistaUsuarioAdmin);
+        vistaUsuarioAdmin.recargarTabla();
 		frame.getContentPane().validate();//RE-dispongo los elementos segun el layout
 		frame.getContentPane().repaint();//RE-pinto los elementos dispuestos en el paso anterior
 	}
