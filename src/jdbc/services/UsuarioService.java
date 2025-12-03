@@ -92,11 +92,11 @@ public class UsuarioService {
         }
     }
 
-    public Usuario loginUsuario(Integer dni, String pass) throws ServiceException {
+    public Usuario loginUsuario(String email, String pass) throws ServiceException {
         try {
-            return dao.loginUsuario(dni, pass);
+            return dao.loginUsuario(email, pass);
         } catch (NoMatchesException e) {
-            throw new ServiceException("El dni o la contraseña no coinciden.");
+            throw new ServiceException("El email o la contraseña no coinciden.");
         }
         catch (ViolacionRestriccionException e) {
             throw new ServiceException("Hubo un error inesperado al tratar de obtener el usuario: el parametro de busqueda no cumple con las restricciones del campo.");

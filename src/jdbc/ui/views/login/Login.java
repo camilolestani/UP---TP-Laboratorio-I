@@ -12,7 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Login extends JPanel {
-    private JTextField dniTxt;
+    private JTextField emailTxt;
     private JTextField passwordTxt;
     private JButton loginButton;
     private JLabel errorLabel;
@@ -34,9 +34,9 @@ public class Login extends JPanel {
         inputsPanel.setBackground(Color.gray);
         inputsPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 
-        inputsPanel.add(new JLabel("DNI: "));
-        dniTxt = new JTextField();
-        inputsPanel.add(dniTxt);
+        inputsPanel.add(new JLabel("EMAIL: "));
+        emailTxt = new JTextField();
+        inputsPanel.add(emailTxt);
 
         inputsPanel.add(new JLabel("PASSWORD: "));
         passwordTxt = new JTextField();
@@ -48,7 +48,7 @@ public class Login extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 try {
                     UsuarioService usuarioService = new UsuarioService();
-                    Usuario user = usuarioService.loginUsuario(Integer.parseInt(dniTxt.getText()), passwordTxt.getText());
+                    Usuario user = usuarioService.loginUsuario(emailTxt.getText(), passwordTxt.getText());
                     if (user.getDni() != null) {
                         panelManager.mostrarVistaUsuarios();
                         limpiarValores();
@@ -75,7 +75,7 @@ public class Login extends JPanel {
     }
 
     private void limpiarValores(){
-        dniTxt.setText("");
+        emailTxt.setText("");
         passwordTxt.setText("");
         errorLabel.setVisible(false);
     }

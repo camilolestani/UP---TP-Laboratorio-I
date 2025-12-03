@@ -109,8 +109,8 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
     }
 
     @Override
-    public Usuario loginUsuario(Integer d, String p) throws DAOException {
-        String sql = "SELECT * FROM usuarios WHERE dni = ? and password = ?";
+    public Usuario loginUsuario(String em, String pass) throws DAOException {
+        String sql = "SELECT * FROM usuarios WHERE email = ? and password = ?";
         try {
             List<Usuario> usuarios = QueryRunner.runSelection(sql, (rs) -> {
                 int dni = rs.getInt("dni");
@@ -120,7 +120,7 @@ public class UsuarioDAOH2Impl implements UsuarioDAO {
                 TipoUsuario tipo = TipoUsuario.valueOf(rs.getString("tipo_usuario"));
 
                 return new Usuario(dni, nombreCompleto, email, password, tipo);
-            }, d, p);
+            }, em, pass);
             if(usuarios.isEmpty()) {
                 throw new NoMatchesException("No se encontró el usuario buscado.");
             }

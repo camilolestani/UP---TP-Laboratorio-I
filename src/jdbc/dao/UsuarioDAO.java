@@ -14,7 +14,7 @@ public interface UsuarioDAO {
 
     Usuario muestraUsuario(Integer dni) throws DAOException;
 
-    Usuario loginUsuario(Integer dni, String password) throws DAOException;
+    Usuario loginUsuario(String email, String password) throws DAOException;
 
     List<Usuario> listaTodosLosUsuarios() throws DAOException;
 }
