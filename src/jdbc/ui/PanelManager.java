@@ -47,7 +47,7 @@ public class PanelManager {
 	public void mostrarVistaUsuarios() {
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(vistaUsuarioAdmin);
-        vistaUsuarioAdmin.recargarTabla();
+        vistaUsuarioAdmin.recargarContenido();
 		frame.getContentPane().validate();//RE-dispongo los elementos segun el layout
 		frame.getContentPane().repaint();//RE-pinto los elementos dispuestos en el paso anterior
 	}
